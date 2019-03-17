@@ -5,10 +5,9 @@
  */
 package DAO;
 
-import entities.Assignment;
-import entities.AssignmentPerCourse;
 import entities.Course;
 import entities.Student;
+import entities.StudentsPerCourse;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,25 +21,20 @@ import java.util.logging.Logger;
  *
  * @author George
  */
-public class AssignmentPerCourseDAO extends DAOConnection {
+public class StudentPerCourseDAO extends DAOConnection {
     
-    
-    public AssignmentPerCourseDAO(){
+    public StudentPerCourseDAO(){
        setConnection();
    }
      
-    public AssignmentPerCourse getAssignmentPerCourse(String courseId) {
+    public StudentsPerCourse getStudentsPerCourse(String courseId) {
         
         CourseDAO courseDAO=new CourseDAO();
-        List<Assignment> assignments=new ArrayList<Assignment>();
-        AssignmentPerCourse assignmentsPerCourse=new AssignmentPerCourse();
+        StudentsPerCourse studentsPerCourse=new StudentsPerCourse();
         Course course=courseDAO.getCoursetById(courseId);
-        assignmentsPerCourse.setCourse(course);
         
-        
-        String query = "select apc.assignmentId,apc.title,apc.description,apc.submissionDate,apc.oralMark,apc.totalMark " +
-                       "from assignmentpercourse apc,assignment a where apc.assignmentId = ? and apc.assignmentId=a.assignmentId";
-        
+        String query = "select spc.studentId,s.firstName,s.lastName,s.dateOfBirth,s.tuitionFees from studentpercourse spc,student s "+
+                       "where spc.courseId = ? and spc.studentId=s.studentId";
         Connection conn = getConnection();
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -51,17 +45,17 @@ public class AssignmentPerCourseDAO extends DAOConnection {
              rs = pst.executeQuery();
              while(rs.next())
              {
-              Assignment assignment=new Assignment();   
-              assignment.setAssignmentId(rs.getString(1));
-              assignment.setTitle(rs.getString(2));
-              assignment.setSubmissionDate(rs.getString(3));
-              assignment.setOralMark(rs.getDouble(4));
-              assignment.setTotalMark(rs.getDouble(5));
-              assignmentsPerCourse.setAssignment(assignment);
+              Student student=new Student();   
+              student.setStudentId(rs.getString(1));
+              student.setLastName(rs.getString(2));
+              student.setFirstName(rs.getString(3));
+              student.setDateOfBirth(rs.getString(4));
+              student.setTuitionFees(rs.getDouble(5));
+              studentsPerCourse.setStudent(student);
             }
             
-           
-            return assignmentsPerCourse;
+            studentsPerCourse.setCourse(course);
+            
              
              
         }catch(SQLException x){
@@ -75,12 +69,12 @@ public class AssignmentPerCourseDAO extends DAOConnection {
                 Logger.getLogger(StudentPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return assignmentsPerCourse;
+        return studentsPerCourse;
     }
     
-    public void insertAssignmentToCourse(String courseId,String assignmentId)
+    public void insertStudentToCourse(String courseId,String studentId)
     {
-        String query = "INSERT INTO assignmentpercourse VALUES (?,?)";
+        String query = "INSERT INTO studentpercourse VALUES (?,?)";
         Connection con=null;
         PreparedStatement pst=null;
         
@@ -88,7 +82,7 @@ public class AssignmentPerCourseDAO extends DAOConnection {
             con=getConnection();
             pst = con.prepareStatement(query);
             pst.setString(1,courseId);
-            pst.setString(2,assignmentId);
+            pst.setString(2,studentId);
             int noumero = pst.executeUpdate();
             if (noumero > 0) {
                 System.out.println("Record succesfully inserted");
@@ -98,7 +92,7 @@ public class AssignmentPerCourseDAO extends DAOConnection {
             pst.close();
             closeConnection();
         } catch(SQLException x){
-            x.getMessage();
+            x.printStackTrace();
         }finally{
             try {
                 
@@ -111,16 +105,16 @@ public class AssignmentPerCourseDAO extends DAOConnection {
           
     }
       
-    public void deleteAssignmentFromCourse(String assignmentId){
+    public void deleteStudentFromCourse(String studentId){
         
-        String query = "delete from assignmentpercourse where assignmentId=?";
+        String query = "delete from studentpercourse where studentId=?";
         Connection con=null;
         PreparedStatement pst=null;
         
         try {
             con=getConnection();
             pst = con.prepareStatement(query);
-            pst.setString(1,assignmentId);
+            pst.setString(1,studentId);
             int noumero = pst.executeUpdate();
             if (noumero > 0) {
                 System.out.println("Record succesfully deleted");
@@ -130,7 +124,7 @@ public class AssignmentPerCourseDAO extends DAOConnection {
             pst.close();
             closeConnection();
         } catch(SQLException x){
-            x.getMessage();
+            x.printStackTrace();
         }finally{
             try {
                 
@@ -144,9 +138,9 @@ public class AssignmentPerCourseDAO extends DAOConnection {
     }
     
     
-    public void updateCourseId(String courseId,String assignmentId){
+    public void updateCourseId(String courseId,String studentId){
         
-        String query = "update assignmentpercourse set courseId=? where assignmentId=?";
+        String query = "update studentpercourse set courseId=? where studentId=?";
         Connection con=null;
         PreparedStatement pst=null;
         
@@ -154,7 +148,7 @@ public class AssignmentPerCourseDAO extends DAOConnection {
             con=getConnection();
             pst = con.prepareStatement(query);
             pst.setString(1,courseId);
-            pst.setString(2,assignmentId);
+            pst.setString(2,studentId);
             int noumero = pst.executeUpdate();
             if (noumero > 0) {
                 System.out.println("Record succesfully updated");
@@ -177,17 +171,16 @@ public class AssignmentPerCourseDAO extends DAOConnection {
         
     }
     
-     public void updateAssignmentId(String courseId,String assignmentId)
-     {
+     public void updateCourseStudentId(String courseId,String studentId){
         
-        String query = "update assignmentpercourse set assignmentId=? where courseId=?";
+        String query = "update studentpercourse set studentId=? where courseId=?";
         Connection con=null;
         PreparedStatement pst=null;
         
         try {
             con=getConnection();
             pst = con.prepareStatement(query);
-            pst.setString(1,assignmentId);
+            pst.setString(1,studentId);
             pst.setString(2,courseId);
             int noumero = pst.executeUpdate();
             if (noumero > 0) {
@@ -211,5 +204,4 @@ public class AssignmentPerCourseDAO extends DAOConnection {
         
     }
     
-       
 }

@@ -5,31 +5,47 @@
  */
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author George
  */
 public class TrainerPerCourse {
     
-    private Trainer trainer;
+   
     private Course course;
+    private List<Trainer> trainers;
     
-    public TrainerPerCourse(Trainer trainer,Course course){
-        this.trainer=trainer;
+    public TrainerPerCourse(){
+        
+        trainers=new ArrayList<>();
+    }
+    
+    public TrainerPerCourse(Course course){
+        trainers=new ArrayList<>();
         this.course=course;
     }
     
-    public void setTrainer(Trainer trainer){
-        this.trainer=trainer;
+    
+    public void setTrainers(List<Trainer> trainers){
+        
+        this.trainers=trainers;
+    }
+   
+    
+    public void addTrainer(Trainer trainer){
+        trainers.add(trainer);
     }
     
     public void setCourse(Course course){
         this.course=course;
     }
     
-    public Trainer getTrainer()
+    public List<Trainer> getTrainers()
     {
-        return trainer;
+        return trainers;
     }
     
     public Course getCourse(){

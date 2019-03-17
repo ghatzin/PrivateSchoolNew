@@ -7,7 +7,8 @@ package DAO;
 
 import entities.Course;
 import entities.Student;
-import entities.StudentsPerCourse;
+import entities.Trainer;
+import entities.TrainerPerCourse;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,21 +22,20 @@ import java.util.logging.Logger;
  *
  * @author George
  */
-public class StudentsPerCourseDAO extends DAOConnection {
-    
-    public StudentsPerCourseDAO(){
+public class TrainerPerCourseDAO extends DAOConnection {
+        
+    public TrainerPerCourseDAO(){
        setConnection();
    }
      
-    public StudentsPerCourse getStudentsPerCourse(String courseId) {
+    public TrainerPerCourse getTrainersPerCourse(String courseId) {
         
         CourseDAO courseDAO=new CourseDAO();
-        List<Student> students=new ArrayList<Student>();
-        StudentsPerCourse studentsPerCourse=new StudentsPerCourse();
+        TrainerPerCourse trainersPerCourse=new TrainerPerCourse();
         Course course=courseDAO.getCoursetById(courseId);
         
-        String query = "select spc.studentId,s.firstName,s.lastName,s.dateOfBirth,s.tuitionFees from studentpercourse spc,student s "+
-                       "where spc.courseId = ? and spc.studentId=s.studentId";
+        String query = "select tpc.trainerId,tpc.lastName,tpc.firstName from trainerpercourse tpc,trainer t "+
+                       "where tpc.trainerId = ? and tpc.trainerId=t.trainerId";
         Connection conn = getConnection();
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -46,18 +46,14 @@ public class StudentsPerCourseDAO extends DAOConnection {
              rs = pst.executeQuery();
              while(rs.next())
              {
-              Student student=new Student();   
-              student.setStudentId(rs.getString(1));
-              student.setLastName(rs.getString(2));
-              student.setFirstName(rs.getString(3));
-              student.setDateOfBirth(rs.getString(4));
-              student.setTuitionFees(rs.getDouble(5));
-              students.add(student);
+              Trainer trainer=new Trainer();   
+              trainer.setTrainerId(rs.getString(1));
+              trainer.setLastName(rs.getString(2));
+              trainer.setFirstName(rs.getString(3));
+              trainersPerCourse.addTrainer(trainer);
             }
             
-            studentsPerCourse.setCourse(course);
-            studentsPerCourse.setStudents(students);
-             
+            trainersPerCourse.setCourse(course);
              
         }catch(SQLException x){
             x.printStackTrace();
@@ -67,15 +63,15 @@ public class StudentsPerCourseDAO extends DAOConnection {
                 pst.close();
                 closeConnection();
             } catch (SQLException ex) {
-                Logger.getLogger(StudentsPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrainerPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return studentsPerCourse;
+        return trainersPerCourse;
     }
     
-    public void insertStudentToCourse(String courseId,String studentId)
+    public void insertTrainerToCourse(String courseId,String trainerId)
     {
-        String query = "INSERT INTO studentpercourse VALUES (?,?)";
+        String query = "INSERT INTO trainerpercourse VALUES (?,?)";
         Connection con=null;
         PreparedStatement pst=null;
         
@@ -83,7 +79,7 @@ public class StudentsPerCourseDAO extends DAOConnection {
             con=getConnection();
             pst = con.prepareStatement(query);
             pst.setString(1,courseId);
-            pst.setString(2,studentId);
+            pst.setString(2,trainerId);
             int noumero = pst.executeUpdate();
             if (noumero > 0) {
                 System.out.println("Record succesfully inserted");
@@ -100,22 +96,22 @@ public class StudentsPerCourseDAO extends DAOConnection {
                 pst.close();
                 closeConnection();
             } catch (SQLException ex) {
-                Logger.getLogger(StudentsPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrainerPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
           
     }
       
-    public void deleteStudentFromCourse(String studentId){
+    public void deleteTrainerFromCourse(String trainerId){
         
-        String query = "delete from studentpercourse where studentId=?";
+        String query = "delete from trainertpercourse where trainerId=?";
         Connection con=null;
         PreparedStatement pst=null;
         
         try {
             con=getConnection();
             pst = con.prepareStatement(query);
-            pst.setString(1,studentId);
+            pst.setString(1,trainerId);
             int noumero = pst.executeUpdate();
             if (noumero > 0) {
                 System.out.println("Record succesfully deleted");
@@ -132,16 +128,16 @@ public class StudentsPerCourseDAO extends DAOConnection {
                 pst.close();
                 closeConnection();
             } catch (SQLException ex) {
-                Logger.getLogger(StudentsPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrainerPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
     }
     
     
-    public void updateStudentPerCourse(String courseId,String studentId){
+    public void updateCourseId(String courseId,String studentId){
         
-        String query = "update studentpercourse set courseId=?,studentId=?";
+        String query = "update trainerpercourse set courseId=? where trainerId=?";
         Connection con=null;
         PreparedStatement pst=null;
         
@@ -152,9 +148,9 @@ public class StudentsPerCourseDAO extends DAOConnection {
             pst.setString(2,studentId);
             int noumero = pst.executeUpdate();
             if (noumero > 0) {
-                System.out.println("Record succesfully deleted");
+                System.out.println("Record succesfully updated");
             } else {
-                System.out.println("Failed to delete record");
+                System.out.println("Failed to update record");
             }
             pst.close();
             closeConnection();
@@ -166,11 +162,44 @@ public class StudentsPerCourseDAO extends DAOConnection {
                 pst.close();
                 closeConnection();
             } catch (SQLException ex) {
-                Logger.getLogger(StudentsPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrainerPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
     }
-    
-    
+
+    public void updateTrainerId(String courseId,String trainerId)
+    {
+        
+        String query = "update trainerpercourse set trainerId=? where courseId=?";
+        Connection con=null;
+        PreparedStatement pst=null;
+        
+        try {
+            con=getConnection();
+            pst = con.prepareStatement(query);
+            pst.setString(1,trainerId);
+            pst.setString(2,courseId);
+            int noumero = pst.executeUpdate();
+            if (noumero > 0) {
+                System.out.println("Record succesfully updated");
+            } else {
+                System.out.println("Failed to update record");
+            }
+            pst.close();
+            closeConnection();
+        } catch(SQLException x){
+            x.printStackTrace();
+        }finally{
+            try {
+                
+                pst.close();
+                closeConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(TrainerPerCourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }
+     
 }

@@ -32,6 +32,10 @@ public class StudentsPerCourse {
         return course;
     }
     
+    public void setStudent(Student student){
+        students.add(student);
+    }
+    
     public void setStudents(List<Student> students){
         this.students=students;
     }

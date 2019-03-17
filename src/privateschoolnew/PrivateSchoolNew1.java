@@ -32,23 +32,30 @@ public class PrivateSchoolNew1 {
        // UserDAO userDAO=new UserDAO();
        // userDAO.insertUser("8","vvasileiadis","vyron34","trsiner","VV001");
        
-       StudentsPerCourseDAO studentsPerCourseDAO=new StudentsPerCourseDAO();
-       StudentsPerCourse studentsPerCourse=new StudentsPerCourse();
-       studentsPerCourse=studentsPerCourseDAO.getStudentsPerCourse("JAVABC7FT");
+       //StudentsPerCourseDAO studentsPerCourseDAO=new StudentsPerCourseDAO();
+       //StudentsPerCourse studentsPerCourse=new StudentsPerCourse();
+       //studentsPerCourse=studentsPerCourseDAO.getStudentsPerCourse("JAVABC7FT");
        
-       System.out.println(studentsPerCourse.getCourse());
+       //System.out.println(studentsPerCourse.getCourse());
        
-       for (Student student:studentsPerCourse.getStudents())
-            System.out.println(student);
+       //for (Student student:studentsPerCourse.getStudents())
+            //System.out.println(student);
        
        
-       StudentDAO studentDAO=new StudentDAO();
+       //StudentDAO studentDAO=new StudentDAO();
        //studentDAO.insertStudent("NIKVASV","VASVETAKIS","NIKOS","1974-11-05",2.500);
-       studentsPerCourseDAO.deleteStudentFromCourse("NIKVASV");
+       //studentsPerCourseDAO.deleteStudentFromCourse("NIKVASV");
        
        
+       CourseScheduleDAO courseScheduleDAO=new CourseScheduleDAO(); 
        
-        
+       //courseScheduleDAO.insertCourseSchedule("2019-03-05","Fundamentals of OO programming","OO Programming","JAVABC7FT");
+       //courseScheduleDAO.updateCourseSchedule("2019-03-05","Fundamentals of Object Oriented Programming","OO Programming","JAVABC7FT");
+       List<CourseSchedule> courseSchedule=new ArrayList<CourseSchedule>();
+       courseSchedule=courseScheduleDAO.getCourseScheduleById("JAVABC7FT");
+               
+               
+       //courseScheduleDAO.deleteCourseSchedule("JAVABC7FT");
         
         
         

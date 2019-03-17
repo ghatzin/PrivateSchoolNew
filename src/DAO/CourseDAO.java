@@ -159,6 +159,7 @@ public class CourseDAO extends DAOConnection {
                 pst.setString(3, type);
                 pst.setString(4,startDate);
                 pst.setString(5,endDate);
+                pst.setString(6,courseId);
              
                 int result = pst.executeUpdate();
                 if(result>0){
