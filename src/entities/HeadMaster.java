@@ -55,5 +55,9 @@ public class HeadMaster extends User {
         this.lastNAme = lastNAme;
     }
     
-    
+    public String toString(){
+        
+        return this.firstName+" "+this.lastNAme+" "+this.role;
+    }
+        
 }

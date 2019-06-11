@@ -55,6 +55,6 @@ public class Trainer extends User {
     
     public String toString()
     {
-        return trainerId+" "+firstName+" "+lastName;
+        return trainerId+" "+firstName+" "+lastName+" "+role;
     }
 }

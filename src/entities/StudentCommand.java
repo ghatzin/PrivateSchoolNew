@@ -5,21 +5,26 @@
  */
 package entities;
 
+import DAO.CourseScheduleDAO;
+import DAO.StudentDAO;
+
 /**
  *
  * @author George
  */
-public class StudentAction {
+public class StudentCommand {
 
+    private StudentDAO studentDAO;
+    private CourseScheduleDAO courseScheduleDAO;
     private Student student;
     
-    
-    public StudentAction(){
+    public StudentCommand(){
         
     }
     
-    public StudentAction(Student student){
+    public StudentCommand(Student student){
         this.student=student;
+        
     }
     
     public void seeAssignmentsToSubmitPerCourse()

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/StudentsPerCourse.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/AssignmentDAO.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/AssignmentPerCourseDAO.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/TrainerCommand.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/TrainerDAO.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/StudentCommand.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/StudentDAO.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/User.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/Course.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/Trainer.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/privateschoolnew/HeadMasterGUI.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/HeadMasterCommand.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/StudentPerCourseDAO.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/UserDAO.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/DAOConnection.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/privateschoolnew/TrainerGUI.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/Assignment.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/Student.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/AssignmentPerCourse.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/privateschoolnew/Login.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/TrainerPerCourse.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/TrainerPerCourseDAO.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/privateschoolnew/StudentGUI.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/CourseDAO.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/privateschoolnew/PrivateSchoolNew.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/entities/HeadMaster.java</file>
+            <file>file:/C:/JavaExamples/PrivateSchoolNew/src/DAO/CourseScheduleDAO.java</file>
+        </group>
+    </open-files>
+</project-private>

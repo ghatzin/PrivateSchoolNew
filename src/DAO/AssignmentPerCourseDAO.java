@@ -111,9 +111,9 @@ public class AssignmentPerCourseDAO extends DAOConnection {
           
     }
       
-    public void deleteAssignmentFromCourse(String assignmentId){
+    public void deleteAssignmentFromCourse(String courseId,String assignmentId){
         
-        String query = "delete from assignmentpercourse where assignmentId=?";
+        String query = "delete from assignmentpercourse where courseId=? and assignmentId=?";
         Connection con=null;
         PreparedStatement pst=null;
         

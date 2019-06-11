@@ -97,6 +97,7 @@ public class UserDAO extends DAOConnection {
             student.setFirstName(rs.getString(3));
             student.setDateOfBirth(rs.getString(4));
             student.setTuitionFees(rs.getDouble(5));
+            student.setRole("student");
         }catch(SQLException x){
             x.printStackTrace();
         }finally{
@@ -114,7 +115,7 @@ public class UserDAO extends DAOConnection {
       public Trainer getTrainer(String userName,String password)
       {
         
-        String query = "select ut.trainerId,s.lastName,s.firstName from trainer t, usercredentials uc, usertrainer ut " +
+        String query = "select ut.trainerId,t.lastName,t.firstName from trainer t, usercredentials uc, usertrainer ut " +
                        "where uc.username = ? and uc.userPassword=MD5(?) and uc.userId=ut.userId and ut.trainerId=t.trainerId";
         Trainer trainer = new Trainer();
         Connection conn = getConnection(); 
@@ -129,6 +130,7 @@ public class UserDAO extends DAOConnection {
             trainer.setTrainerId(rs.getString(1));
             trainer.setLastName(rs.getString(2));
             trainer.setFirstName(rs.getString(3));
+            trainer.setRole("trainer");
         }catch(SQLException x){
             x.printStackTrace();
         }finally{
@@ -146,7 +148,7 @@ public class UserDAO extends DAOConnection {
       
      public HeadMaster getHeadMaster(String userName,String password){
          
-        String query = "select ua.administratorId,s.lastName,s.firstName from administrator a, usercredentials uc, useradministrator ua " +
+        String query = "select ua.administratorId,a.lastName,a.firstName from administrator a, usercredentials uc, useradministrator ua " +
                        "where uc.username = ? and uc.userPassword=MD5(?) and uc.userId=ua.userId and ua.administratorId=a.administratorId";
          
         HeadMaster headMaster = new HeadMaster();
@@ -162,6 +164,7 @@ public class UserDAO extends DAOConnection {
             headMaster.setAdministratorId(rs.getString(1));
             headMaster.setFirstName(rs.getString(2));
             headMaster.setLastNAme(rs.getString(3));
+            headMaster.setRole("headmaster");
         }catch(SQLException x){
             x.printStackTrace();
         }finally{
@@ -179,7 +182,7 @@ public class UserDAO extends DAOConnection {
      
      public void insertUser(String userId,String userName,String password,String role,String id)
      {
-        String query = "INSERT INTO usercredentials (userId,username,userPassword,role)  VALUES (?,?,?,?)";
+        String query = "INSERT INTO usercredentials (userId,username,userPassword,role)  VALUES (?,?,MD5(?),?)";
         Connection con=null;
         PreparedStatement pst=null;
         
@@ -282,7 +285,7 @@ public class UserDAO extends DAOConnection {
      }//end of insert trainer
      
      
-      public void insertHeadMaster(String userId,String administratorId)
+     public void insertHeadMaster(String userId,String administratorId)
      {
          
          String query="insert into useradministrator (userId,administratorId) values (?,?)";
@@ -315,6 +318,154 @@ public class UserDAO extends DAOConnection {
         }   
          
      }//end of insert headMaster
+     
+    
+     public void deleteUser(String userId,String roleId)
+     {
+         
+         String query="delete from usercredentials where userId=? and role=?";
+        
+          
+         Connection con=null;
+         PreparedStatement pst=null;
+        
+          try 
+          {
+            con=getConnection();
+            pst = con.prepareStatement(query);
+            pst.setString(1,userId);
+            pst.setString(2,roleId);
+            int noumero = pst.executeUpdate();
+            if (noumero > 0) {
+                System.out.println("Record succesfully deleted");
+            } else {
+                System.out.println("Not success");
+            }
+         }catch(SQLException x){
+            x.printStackTrace();
+        }finally{
+            try {
+     
+                pst.close();
+                closeConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }   
+     }
+     
+    public void updateUserRole(String userId,String role)
+    {
+         String query="update usercredentials set role=? where userId=?";
+        
+          
+         Connection con=null;
+         PreparedStatement pst=null;
+        
+          try 
+          {
+            con=getConnection();
+            pst = con.prepareStatement(query);
+            pst.setString(1,role);
+            pst.setString(2,userId);
+            //pst.setString(3,role);
+            //pst.setString(4,userId);
+            
+            int noumero = pst.executeUpdate();
+            if (noumero > 0) {
+                System.out.println("Record succesfully updated");
+            } else {
+                System.out.println("Not success");
+            }
+         }catch(SQLException x){
+            x.printStackTrace();
+        }finally{
+            try {
+     
+                pst.close();
+                closeConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }   
+  
+    }
+    
+    
+    public void updateUserId(String userId,String userName,String userPassword,String role)
+    {
+         String query="update usercredentials set userId=? where username=? and userPassword=MD5(?) and role=?";
+        
+          
+         Connection con=null;
+         PreparedStatement pst=null;
+        
+          try 
+          {
+            con=getConnection();
+            pst = con.prepareStatement(query);
+            pst.setString(1,userId);
+            pst.setString(2,userName);
+            pst.setString(3,userPassword);
+            pst.setString(4,role);
+            
+            int noumero = pst.executeUpdate();
+            if (noumero > 0) {
+                System.out.println("Record succesfully updated");
+            } else {
+                System.out.println("Not success");
+            }
+         }catch(SQLException x){
+            x.printStackTrace();
+        }finally{
+            try {
+     
+                pst.close();
+                closeConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }   
+  
+    }
+    
+    public void updateUserNamePassword(String userId,String userName,String userPassword,String role)
+    {
+         String query="update usercredentials set username=?,userPassword=MD5(?) where userId=? and role=?";
+        
+          
+         Connection con=null;
+         PreparedStatement pst=null;
+        
+          try 
+          {
+            con=getConnection();
+            pst = con.prepareStatement(query);
+            pst.setString(1,userName);
+            pst.setString(2,userPassword);
+            pst.setString(3,userId);
+            pst.setString(4,role);
+            
+            int noumero = pst.executeUpdate();
+            if (noumero > 0) {
+                System.out.println("Record succesfully updated");
+            } else {
+                System.out.println("Not success");
+            }
+         }catch(SQLException x){
+            x.printStackTrace();
+        }finally{
+            try {
+     
+                pst.close();
+                closeConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }   
+  
+    }
+
 }
          
          

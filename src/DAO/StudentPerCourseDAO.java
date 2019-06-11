@@ -105,16 +105,17 @@ public class StudentPerCourseDAO extends DAOConnection {
           
     }
       
-    public void deleteStudentFromCourse(String studentId){
+    public void deleteStudentFromCourse(String courseId,String studentId){
         
-        String query = "delete from studentpercourse where studentId=?";
+        String query = "delete from studentpercourse where courseId=? and studentId=?";
         Connection con=null;
         PreparedStatement pst=null;
         
         try {
             con=getConnection();
             pst = con.prepareStatement(query);
-            pst.setString(1,studentId);
+            pst.setString(1,courseId);
+            pst.setString(2,studentId);
             int noumero = pst.executeUpdate();
             if (noumero > 0) {
                 System.out.println("Record succesfully deleted");

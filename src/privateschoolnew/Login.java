@@ -16,7 +16,7 @@ public class Login {
     private String password;
     private String role;
     private User user;
-    private Session session;
+   
     
     
     
@@ -80,24 +80,6 @@ public class Login {
         return user;
     }
     
-    public void getTypeOfUser(){
-        
-        
-        if (user instanceof Student){
-            Student student=(Student)user;
-            StudentSession studentSession=new StudentSession(student);
-           
-        }
-        else if (user instanceof Trainer){
-            Trainer trainer=(Trainer)(user);
-            TrainerSession trainerSession=new TrainerSession(trainer);
-        }
-        
-        
-     
-    }
     
-  
-    
-    
-}
+}       
+ 

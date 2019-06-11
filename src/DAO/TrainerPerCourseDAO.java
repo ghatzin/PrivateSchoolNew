@@ -102,9 +102,9 @@ public class TrainerPerCourseDAO extends DAOConnection {
           
     }
       
-    public void deleteTrainerFromCourse(String trainerId){
+    public void deleteTrainerFromCourse(String courseId,String trainerId){
         
-        String query = "delete from trainertpercourse where trainerId=?";
+        String query = "delete from trainertpercourse where courseId=? and trainerId=?";
         Connection con=null;
         PreparedStatement pst=null;
         
